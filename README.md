@@ -6,10 +6,12 @@ A datalake of star wars data retrieved from the swapi API
 
 -Pull the postgres image with command:  > docker pull postgres:latest
 
-# Create new container 
+# Create new postgres container 
 
 -start a new postgres instance
- docker run --name StarWarsDriven -e POSTGRES_PASSWORD=maytheforcebewithyou -d postgres
+ docker run -p 5432:5432 --name StarWarsDriven -e POSTGRES_PASSWORD=maytheforcebewithyou -d postgres
+
+- The -p <>:<> commands map your containers port to your local maschines port
 
 -password = "maytheforcebewithyou"
 
@@ -27,17 +29,12 @@ A datalake of star wars data retrieved from the swapi API
 
 -Establish DB connection: > \c starwarsdriven
 
--Create table: > CREATE TABLE starwars_people(
-                                                ID SERIAL PRIMARY KEY,
-                                                NAME TEXT NOT NULL,
-                                                HEIGHT INT NOT NULL,
-                                                HAIR_COLOR TEXT NOT NULL,
-                                                SKIN_COLOR TEXT NOT NULL, 
-                                                EYE_COLOR TEXT NOT NULL,
-                                                BIRTH_YEAR TEXT NOT NULL,
-                                                GENDER TEXT NOT NULL                                                 
-                                                );
+-Create table: > CREATE TABLE starwars_people(ID SERIAL PRIMARY KEY, NAME TEXT NOT NULL, HEIGHT INT NOT NULL, HAIR_COLOR TEXT NOT NULL,SKIN_COLOR TEXT NOT NULL, EYE_COLOR TEXT NOT NULL, BIRTH_YEAR TEXT NOT NULL, GENDER TEXT NOT NULL);
 
-# Run Container
 
--
+# Run pyhton 
+
+-install cursor class for connecting pyhton script: >pip install psycopg2
+
+-replace const variables with you own configurations
+
