@@ -22,7 +22,7 @@ if response.status_code == 200:
     """
     
     #connecting db
-    connection = psycopg2.connect(database = DATABASE, user = USER, password = PASSWORD, port=PORT) #local host at default
+    connection = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, port=PORT) #local host at default
     print("connected...")
     connection.autocommit = False
     cursor = connection.cursor()
@@ -39,10 +39,9 @@ if response.status_code == 200:
         gender = person["gender"]
     
 
-        SQLquery = f"INSERT INTO starwars_people(name, height, hair_color, skin_color, eye_color, birth_year, gender) VALUES('{name}', {height}, '{hair_color}', '{skin_color}', '{eye_color}', '{birth_year}', '{gender}');"
-        print(SQLquery)
-        cursor.execute(SQLquery)
-        connection.commit()
+       
+        cursor.execute("""INSERT INTO starwars_people(name, height, hair_color, skin_color, eye_color, birth_year, gender) VALUES(%s, %s, %s, %s, %s, %s, %s);""",
+                       (name, height, hair_color, skin_color, eye_color, birth_year, gender))
 
       
     
