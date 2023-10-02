@@ -21,8 +21,23 @@ A datalake of star wars data retrieved from the swapi API
 
 -Connect to postgres Db with: > psql -h localhost -U postgres
 
--Create DB tab: >CREATE DATABASE StarWarsDriven
+-Create DB tab: >CREATE DATABASE starwarsdriven
 
--Display DB: >
+-Display DB: > \l
+
+-Establish DB connection: > \c starwarsdriven
+
+-Create table: > CREATE TABLE starwars_people(
+                                                ID SERIAL PRIMARY KEY,
+                                                NAME TEXT NOT NULL,
+                                                HEIGHT INT NOT NULL,
+                                                HAIR_COLOR TEXT NOT NULL,
+                                                SKIN_COLOR TEXT NOT NULL, 
+                                                EYE_COLOR TEXT NOT NULL,
+                                                BIRTH_YEAR TEXT NOT NULL,
+                                                GENDER TEXT NOT NULL                                                 
+                                                );
 
 # Run Container
+
+-
