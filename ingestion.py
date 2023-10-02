@@ -5,7 +5,21 @@ response = requests.get('https://swapi.dev/api/people')
 
 if response.status_code == 200:
     people = response.json()
-    print(json.dumps(people))
+    people_results = people["results"] #results hold people in API
 
 
-print()
+    """
+    #printar bara ut
+    people_result = json.dumps(people['results'])
+    print(people_result)
+    """
+    
+    for person in people_results:
+        print(person["name"])
+        name = person["name"]
+        
+    
+    
+
+else:
+    print(f"Error status{response.status_code}")
