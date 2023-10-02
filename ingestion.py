@@ -15,10 +15,15 @@ if response.status_code == 200:
     """
     
     for person in people_results:
-        print(person["name"])
         name = person["name"]
-        
-    
+        height = person["height"]
+        hair_color = person["hair_color"]
+        skin_color = person["skin_color"]
+        eye_color = person["eye_color"]
+        birth_year = person["birth_year"]
+        gender = person["gender"]
+
+        print(name, height, hair_color, skin_color, eye_color, birth_year, gender)    
     
 
 else:
