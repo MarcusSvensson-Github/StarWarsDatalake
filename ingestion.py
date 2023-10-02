@@ -5,7 +5,6 @@ import psycopg2
 DATABASE = "starwarsdriven"
 USER = 'postgres'
 PASSWORD = 'maytheforcebewithyou' #flytta till env variabel
-HOST = "127.0.0.1"
 PORT = '5432'
 
 
@@ -38,13 +37,17 @@ if response.status_code == 200:
         eye_color = person["eye_color"]
         birth_year = person["birth_year"]
         gender = person["gender"]
-
-        cursor.execute(f"INSERT INTO starwars_people(name, height, hair_color, skin_color,  eye_color, birth_year, gender)VALUES ({name}, {height}, {hair_color}, {skin_color}, {eye_color}, {birth_year}, {gender})")
-
-        #print(name, height, hair_color, skin_color, eye_color, birth_year, gender)  
-        #print(type(name), type(height), type(hair_color), type(skin_color), type(eye_color), type(birth_year), type(gender))  
     
-    connection.commit()
+
+        SQLquery = f"INSERT INTO starwars_people(name, height, hair_color, skin_color, eye_color, birth_year, gender) VALUES('{name}', {height}, '{hair_color}', '{skin_color}', '{eye_color}', '{birth_year}', '{gender}');"
+        print(SQLquery)
+        cursor.execute(SQLquery)
+        connection.commit()
+
+      
+    
+    #connection.commit()
+    cursor.close()
     connection.close()
     print("connection closed")
 
