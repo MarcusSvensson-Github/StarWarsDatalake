@@ -1,12 +1,13 @@
+"""
 import requests
 import json
-import psycopg2
 
+"""
 DATABASE = "starwarsdriven"
 USER = 'postgres'
 PASSWORD = 'maytheforcebewithyou' #flytta till env variabel
 PORT = '5432'
-
+"""
 
 response = requests.get('https://swapi.dev/api/people')
 
@@ -14,18 +15,6 @@ if response.status_code == 200:
     people = response.json()
     people_results = people["results"] #results hold people in API
 
-
-    """
-    #printar bara ut
-    people_result = json.dumps(people['results'])
-    print(people_result)
-    """
-    
-    #connecting db
-    connection = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, port=PORT) #local host at default
-    print("connected...")
-    connection.autocommit = False
-    cursor = connection.cursor()
     
     
     #Du går bara igenom en page nu!
@@ -39,15 +28,12 @@ if response.status_code == 200:
         gender = person["gender"]
     
 
-       
-        cursor.execute("""INSERT INTO starwars_people(name, height, hair_color, skin_color, eye_color, birth_year, gender) VALUES(%s, %s, %s, %s, %s, %s, %s);""",
-                       (name, height, hair_color, skin_color, eye_color, birth_year, gender))
+
+
 
       
     
-    #connection.commit()
-    cursor.close()
-    connection.close()
+  
     print("connection closed")
 
 
@@ -55,3 +41,6 @@ if response.status_code == 200:
 
 else:
     print(f"Error status{response.status_code}")
+"""
+
+print('hello!')
