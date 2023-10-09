@@ -1,7 +1,7 @@
 
 import requests
-import json
 import pandas as pd
+from sqlalchemy import create_engine
 
 DATABASE = "starwarsdriven"
 USER = 'postgres'
@@ -38,6 +38,12 @@ if response.status_code == 200:
         data['gender'].append(person["gender"])
 
     print(data)
+    dataframe = pd.DataFrame(data = data)
+
+    engine = create_engine()
+
+    dataframe.to_sql('starwars_people', engine)
+ 
     
 
 else:

@@ -4,6 +4,8 @@ RUN pip install pandas
 
 RUN pip install requests
 
+RUN pip install sqlalchemy
+
 WORKDIR /app
 
 COPY . /app
