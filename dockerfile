@@ -6,6 +6,8 @@ RUN pip install requests
 
 RUN pip install sqlalchemy
 
+RUN pip install psycopg2
+
 WORKDIR /app
 
 COPY . /app

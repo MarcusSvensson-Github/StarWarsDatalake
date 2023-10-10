@@ -2,51 +2,43 @@
 import requests
 import pandas as pd
 from sqlalchemy import create_engine
-
-DATABASE = "starwarsdriven"
-USER = 'postgres'
-PASSWORD = 'maytheforcebewithyou' #flytta till env variabel
-PORT = '5432'
+import psycopg2
+import time
 
 
-response = requests.get('https://swapi.dev/api/people')
 
-if response.status_code == 200:
-    people = response.json()
-    people_results = people["results"] #results hold people in API
+def starwars_people_table():
+    response = requests.get('https://swapi.dev/api/people')
+    if response.status_code == 200:
+        data = response.json()
 
-    
-    data = {
-        'name': [],
-        'height': [],
-        "hair_color": [],
-        "skin_color": [],
-        "eye_color": [],
-        "birth_year": [],
-        "gender": []
-    }
+        result = data["results"]    #results hold people in API
+        print('result type:', type(result))
+        print('fetching:', result[0]['name'])
+        next_page_url = data['next']
 
-    #Du går bara igenom en page nu!
-    for person in people_results:
+        while next_page_url:
+            print(next_page_url)
+            response = requests.get(next_page_url)
+            data = response.json()
+            next_page_url = data['next']
+            page = data['results']
+            result.extend(page)
+
+            
         
-        data['name'].append(person["name"])
-        data['height'].append(int(person["height"]))
-        data['hair_color'].append(person["hair_color"])
-        data['skin_color'].append(person["skin_color"])
-        data['eye_color'].append(person["eye_color"])
-        data['birth_year'].append(person["birth_year"])
-        data['gender'].append(person["gender"])
+        dataframe = pd.DataFrame(result)  
 
-    print(data)
-    dataframe = pd.DataFrame(data = data)
+        engine = create_engine('postgresql+psycopg2://postgres:maytheforcebewithyou@StarWarsDriven/postgres')
 
-    engine = create_engine()
-
-    dataframe.to_sql('starwars_people', engine)
- 
+        dataframe.to_sql('starwars_people', engine)
     
+    else:
+        print(f"Error status{response.status_code}")
 
-else:
-    print(f"Error status{response.status_code}")
+
+if __name__ == "__main__":
+    starwars_people_table()
+
 
 
