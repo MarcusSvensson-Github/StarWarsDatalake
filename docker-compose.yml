@@ -11,12 +11,8 @@ services:
     build: .
     depends_on:
       - database
-
-      
+ 
   jupyter:
     image: jupyter/datascience-notebook:latest
     ports: 
       - 8888:8888
-    depends_on:
-      - database
-      - starwars_ingestor
