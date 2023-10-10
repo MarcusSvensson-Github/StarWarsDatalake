@@ -2,12 +2,13 @@
 A datalake of star wars data retrieved from the swapi API
 
 
-# Setup Postgres with Docker
--Download latest docker desktop release
+### Setup Postgres with Docker
 
--Build images and run them with > docker compose up --build -d
+1. Download latest docker desktop release
 
--To shutdown the containers > docker compose down
+2. Build images and run them with > docker compose up --build -d
+
+3. To shutdown the containers > docker compose down
 
 
 
