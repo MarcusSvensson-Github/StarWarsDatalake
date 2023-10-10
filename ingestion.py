@@ -18,40 +18,20 @@ def build_starwars_db():
         data = response.json()
 
         films = data["results"]   #contain the api body of interest with films as list
-
-        for film in films: #du vill nu 1.ta ut en film i taget 2.skicka in en lista med deras URLer 
-           
+        
+        for film in films: #unpack embedded name data from ulr
             embedded_data = embedded_url_data_fetcher(film['planets'])
-            #print(film['planets'], '\n')
-            #3. ersätta varje films URLer innehål med nytt innehåll
             film['planets'] = embedded_data
-
-            print(film['planets'])
-
-            print(type(film), '\n\n')
-
-
-
- 
-        """
-        next_page_url = data['next']
-        while next_page_url:
-            print(next_page_url)
-            response = requests.get(next_page_url)
-            data = response.json()
-            next_page_url = data['next']
-            page = data['results']
-            result.extend(page)
-        """
+            embedded_data = embedded_url_data_fetcher(film['species'])
+            film['species'] = embedded_data
             
-        """
         dataframe = pd.DataFrame(films)  
 
         engine = create_engine('postgresql+psycopg2://postgres:maytheforcebewithyou@StarWarsDriven/postgres')
 
-        dataframe.to_sql('starwars_films', engine)
+        dataframe.to_sql('starwars_films', engine, if_exists ='replace')
         
-        """
+        
     else:
         print(f"Error status{response.status_code}")
 
@@ -67,11 +47,10 @@ def embedded_url_data_fetcher(column):
     for link in column: 
         response = requests.get(link)
         data = response.json()
-        embedded_data.append(data)
+        embedded_data.append(data['name'])
     return embedded_data
 
  
-
 if __name__ == "__main__":
     build_starwars_db()
 
