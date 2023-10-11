@@ -13,3 +13,11 @@ WORKDIR /app
 COPY . /app
 
 CMD python3 ingestion.py
+
+FROM jupyter/datascience-notebook:latest
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install pandas
