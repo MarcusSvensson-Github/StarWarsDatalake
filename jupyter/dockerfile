@@ -1,0 +1,9 @@
+FROM jupyter/datascience-notebook:latest
+
+RUN pip install pandas
+
+RUN pip install sqlalchemy
+
+WORKDIR /app
+
+COPY . /app

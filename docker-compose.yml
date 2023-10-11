@@ -8,11 +8,11 @@ services:
       - POSTGRES_PASSWORD=maytheforcebewithyou
 
   starwars_ingestor:
-    build: .
+    build: ./scripts
     depends_on:
       - database
  
   jupyter:
-    build: .
+    build: ./jupyter
     ports: 
       - 8888:8888
