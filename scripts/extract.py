@@ -1,14 +1,14 @@
 
 import requests
 import pandas as pd
-from sqlalchemy import create_engine
+import os
 import psycopg2
 import time
 import json
 
 
 
-def build_starwars_db():
+def extract_starwars_data():
     """
     pipeline for starwars api
     """
@@ -22,18 +22,20 @@ def build_starwars_db():
         for film in films: #unpack embedded name data from ulr
             embedded_data = embedded_url_data_fetcher(film['planets'])
             film['planets'] = embedded_data
-            embedded_data = embedded_url_data_fetcher(film['species'])
-            film['species'] = embedded_data
+            #embedded_data = embedded_url_data_fetcher(film['species'])
+            #film['species'] = embedded_data
+        
+        print('creating folder')
+        FOLDER = "object_data/"
+        listOfFiles = os.listdir(FOLDER)
+        numberOfFiles = len(listOfFiles)
+        newFileNumber = numberOfFiles + 1
+        filename = f"{FOLDER}/data_v{newFileNumber}.json"
+        print(filename)
+        print('writing to file')
 
-        print(films[0])
-            
-        dataframe = pd.DataFrame(films)  
-
-        engine = create_engine('postgresql+psycopg2://postgres:maytheforcebewithyou@StarWarsDriven/postgres')
-
-        #skapa tabell data - hash id för få in datan som json
-
-        dataframe.to_sql('starwars_films', engine, if_exists ='replace')
+        with open(filename, "x") as file:
+            file.write(films)
         
         
     else:
@@ -49,14 +51,16 @@ def embedded_url_data_fetcher(column):
     """
     embedded_data = []
     for link in column: 
+        print(link)
         response = requests.get(link)
         data = response.json()
-        embedded_data.append(data['name'])
+        embedded_data.append(data)
+        print('data appended')
     return embedded_data
 
  
 if __name__ == "__main__":
-    build_starwars_db()
+    extract_starwars_data()
 
 
 
