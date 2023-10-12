@@ -7,7 +7,7 @@ conn = psycopg2.connect(database='postgres', user='postgres', password='maythefo
 
 with conn:
     with conn.cursor() as curs:
-        curs.execute('select * from starwars_films')
+        curs.execute('select * from raw_starwars_planets')
         sql_response = curs.fetchone()
         print(sql_response)
 
