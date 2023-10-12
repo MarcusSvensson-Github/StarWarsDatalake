@@ -24,10 +24,14 @@ def build_starwars_db():
             film['planets'] = embedded_data
             embedded_data = embedded_url_data_fetcher(film['species'])
             film['species'] = embedded_data
+
+        print(films[0])
             
         dataframe = pd.DataFrame(films)  
 
         engine = create_engine('postgresql+psycopg2://postgres:maytheforcebewithyou@StarWarsDriven/postgres')
+
+        #skapa tabell data - hash id för få in datan som json
 
         dataframe.to_sql('starwars_films', engine, if_exists ='replace')
         
@@ -47,7 +51,7 @@ def embedded_url_data_fetcher(column):
     for link in column: 
         response = requests.get(link)
         data = response.json()
-        embedded_data.append(data['name'])
+        embedded_data.append(data)
     return embedded_data
 
  
