@@ -51,7 +51,7 @@ def embedded_url_data_fetcher(column):
     for link in column: 
         response = requests.get(link)
         data = response.json()
-        embedded_data.append(data)
+        embedded_data.append(data['name'])
     return embedded_data
 
  

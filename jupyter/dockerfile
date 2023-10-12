@@ -1,8 +1,6 @@
 FROM jupyter/datascience-notebook:latest
 
-RUN pip install pandas
-
-RUN pip install sqlalchemy
+RUN pip install pandas sqlalchemy psycopg2-binary
 
 WORKDIR /app
 
