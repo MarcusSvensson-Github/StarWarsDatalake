@@ -4,7 +4,7 @@ def create_intermediate_bridges(resources):
     root_table = resources[0]
     resources.remove(root_table)
 
-    print('\nroot table', root_table,'\nRemaining resources to go through:', resources)
+    
 
     for resource in resources:
         create_table = f'CREATE TABLE {root_table}_{resource}_bridge({root_table}_id integer, {resource}_id integer);'
