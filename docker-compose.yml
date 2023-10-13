@@ -1,9 +1,10 @@
+version: "2"
 services:
   database:
     image: postgres:latest
     ports:
       - 5432:5432
-    container_name: postgres_db
+    container_name: postgresdb
     environment:
       - POSTGRES_PASSWORD=maytheforcebewithyou
 

@@ -1,16 +1,21 @@
 import psycopg2
 
-def create_int_bridges():
-    create_table = 'CREATE TABLE films_planet_bridge2( film_id integer, planet_id integer);'
-    insert_data =  'insert into films_planet_bridge2(film_id, planet_id) select raw_starwars_films."index" , raw_starwars_planets."index" from raw_starwars_films join raw_starwars_planets on position(raw_starwars_films.url in raw_starwars_planets.films) > 0;'
-    query = f"{create_table}{insert_data}"
+def create_intermediate_bridges(resources):
+    root_table = resources[0]
+    resources.remove(root_table)
 
-    #conn = psycopg2.connect(database='postgres', user='postgres', password='maytheforcebewithyou', port="5432")
-    conn = psycopg2.connect(database='postgres', user='postgres', password='maytheforcebewithyou', host="postgres_db", port="5432")
+    print('\nroot table', root_table,'\nRemaining resources to go through:', resources)
 
-    with conn:
-        with conn.cursor() as curs:
-            curs.execute(query)
+    for resource in resources:
+        create_table = f'CREATE TABLE {root_table}_{resource}_bridge({root_table}_id integer, {resource}_id integer);'
+        insert_data =  f'insert into {root_table}_{resource}_bridge({root_table}_id, {resource}_id) select raw_starwars_{root_table}."index" , raw_starwars_{resource}."index" from raw_starwars_{root_table} join raw_starwars_{resource} on position(raw_starwars_{root_table}.url in raw_starwars_{resource}.{root_table}) > 0;'
+        query = f"{create_table}{insert_data}"
+
+        conn = psycopg2.connect(database='postgres', user='postgres', password='maytheforcebewithyou', host="postgresdb", port="5432")
+
+        with conn:
+            with conn.cursor() as curs:
+                curs.execute(query)
 
     conn.commit()
     conn.close()
