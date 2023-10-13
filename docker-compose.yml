@@ -3,11 +3,11 @@ services:
     image: postgres:latest
     ports:
       - 5432:5432
-    container_name: StarWarsDriven
+    container_name: postgres_db
     environment:
       - POSTGRES_PASSWORD=maytheforcebewithyou
 
-  starwars_ingestor:
+  starwars_ELT:
     build: ./scripts
     depends_on:
       - database
