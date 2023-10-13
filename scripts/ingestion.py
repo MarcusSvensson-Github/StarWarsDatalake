@@ -6,12 +6,12 @@ import time
 import json
 
 
-def build_starwars_db():
+def build_starwars_db(resources):
     """
     pipeline for starwars api
     """
     engine = create_engine('postgresql+psycopg2://postgres:maytheforcebewithyou@StarWarsDriven/postgres')
-    resources = ['films', 'planets']
+    
 
     for resource in resources:
         build_table(resource, engine)
